@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+    <script>
+
+
+
+
+
+
+        function defineProps(obj) {
+
+            for (let p in obj) {
+                let val = obj[p];
+
+                if (val.constructor = Object) {
+                    defineProps(val);
+                } else if ( array ) {
+
+                    for (let item of val) {
+                        if (item is object) {
+                            defineProps(item)
+                        }
+                    }
+                }
+
+                Object.defineProperty(obj, p, {
+                    get() {
+                        return val;
+                    },
+                    set(value) {
+
+                        notify()
+
+                        val = value
+                    }
+                });
+            }
+        }
+
+        let obj = {
+            name: '张三',
+            welcome: '欢迎'
+        };
+
+        defineProps(obj);
+
+
+
+
+    </script>
+</body>
+</html>
