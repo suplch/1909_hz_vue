@@ -12,16 +12,15 @@
 </head>
 <body>
 <div id="app">
-
     <input v-model="taskText" type="text" /> <button v-on:click="addTask()">添加任务</button>
-
-    <ul>
+    <ul>                                 <!-- v-bind 绑定属性指令   -->
         <li v-for="(task, index) in tasks" v-bind:class="{taskItem: task.done}">
-            <input v-model="task.done" v-on:click="clkTask(task)" type="checkbox" /> {{ task.text }} -- {{ task.done }}
+            <input v-model="task.done" v-on:click="clkTask(task)" type="checkbox" />
+            {{ task.text }} -- {{ task.done }}
         </li>
     </ul>
-
-    一共有 {{ tasks.length }} 条任务, 已经完成了 {{doneCount}}, {{ getDoneCount() }}, {{doneCount_computed}} 条
+    一共有 {{ tasks.length }} 条任务,
+    已经完成了 {{doneCount}}, {{ getDoneCount() }}, {{doneCount_computed}} 条
 </div>
 
 <script>
@@ -46,7 +45,7 @@
 
                 this.taskText = '';
             },
-            getDoneCount() {
+            getDoneCount() {  // 通过方法 返回 已完成的任务数
                 let total = 0;
                 for (let task of this.tasks) {
                     if (task.done) {
@@ -66,7 +65,7 @@
                 });
             }
         },
-        computed: {  // 计算属性
+        computed: {  // 通过计算属性 返回 已完成的任务数
             doneCount_computed() {
                 let total = 0;
                 for (let task of this.tasks) {
