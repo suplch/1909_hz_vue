@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        .taskItem {
+            color: grey;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+
+    <input v-model="taskText" type="text" /> <button v-on:click="addTask()">添加任务</button>
+
+    <ul>
+        <li v-for="(task, index) in tasks" v-bind:class="{taskItem: task.done}">
+            <input v-model="task.done" v-on:click="clkTask(task)" type="checkbox" /> {{ task.text }} -- {{ task.done }}
+        </li>
+    </ul>
+
+    一共有 {{ tasks.length }} 条任务, 已经完成了 {{doneCount}}, {{ getDoneCount() }}, {{doneCount_computed}} 条
+</div>
+
+<script>
+
+    new Vue({
+        el: '#app',
+        data: {
+            doneCount: 1,
+            taskText: '',
+            tasks: [
+                {text: '起床', done: true},
+                {text: '刷牙', done: false},
+                {text: '上学', done: false},
+            ]
+        },
+        methods: {
+            addTask() {
+                this.tasks.push({
+                    text: this.taskText,
+                    done: false
+                });
+
+                this.taskText = '';
+            },
+            getDoneCount() {
+                let total = 0;
+                for (let task of this.tasks) {
+                    if (task.done) {
+                        total++;
+                    }
+                }
+                return total;
+            },
+            clkTask(task) {
+                console.log(task);
+                setTimeout(() => {
+                    if (task.done) {
+                        this.doneCount++;
+                    } else {
+                        this.doneCount--;
+                    }
+                });
+            }
+        },
+        computed: {  // 计算属性
+            doneCount_computed() {
+                let total = 0;
+                for (let task of this.tasks) {
+                    if (task.done) {
+                        total++;
+                    }
+                }
+                return total;
+            }
+        }
+    })
+
+</script>
+
+</body>
+</html>
