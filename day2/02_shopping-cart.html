@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    商品列表
+    <table border="1">
+        <thead>
+            <tr>
+                <th>名称</th>
+                <th>价格</th>
+                <th>图片</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-bind:key="goods.id" v-for="goods of goodsList">
+                <td>{{goods.name}}</td>
+                <td>{{goods.price}}</td>
+                <td>{{goods.pic}}</td>
+                <td>
+                    <button @click="addToCart(goods)">添加到购物车</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <hr/>
+    购物车 <button @click="clearCart">情况购物车</button>
+    <table border="1">
+        <thead>
+        <tr>
+            <th></th>
+            <th>名称</th>
+            <th>价格</th>
+            <th>图片</th>
+            <th>数量</th>
+            <th>合计</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-bind:key="item.id" v-for="item of cart.items">
+            <td>
+                <input v-model="item.checked" type="checkbox" />
+            </td>
+            <td>{{item.name}}</td>
+            <td>¥ {{item.price}}</td>
+            <td>{{item.pic}}</td>
+            <td>
+                <button @click="addItemCount(item, -1)">-</button>
+                {{item.count}}
+                <button @click="addItemCount(item, 1)">+</button>
+            </td>
+            <td>{{ item.price * item.count }}</td>
+            <td>
+                <button @click="delItem(item)">删除</button>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">总计</td>
+                <td colspan="2">¥{{ totalPrice }}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+
+<script>
+    let vue = new Vue({
+        el: '#app',
+        data: {
+            goodsList: [
+                {id: '111', name: '电脑', price: 9000, pic: '💻'},
+                {id: '222', name: '键盘', price: 200, pic: '⌨️'},
+                {id: '333', name: '耳机', price: 99, pic: '🎧'},
+                {id: '444', name: '书包', price: 50, pic: '🎒'},
+            ],
+            cart: {
+                items: []
+            }
+        },
+        methods: {
+            addItemCount(item, n) {
+                if (item.count + n > 0) {
+                    item.count += n
+                }
+            },
+            addToCart(goods) {
+                let item = this.cart.items.find((item) => {
+                    return item.id === goods.id
+                });
+                if (item) {
+                    item.count++;
+                } else {
+                    this.cart.items.push({
+                        ...goods,
+                        checked: true,
+                        count: 1
+                    })
+                }
+            },
+            clearCart() {
+                this.cart.items = [];
+            },
+            delItem(item) {
+                let position = this.cart.items.indexOf(item);
+                this.cart.items.splice(position, 1);
+            }
+        },
+        computed: {
+            totalPrice() {
+                let total = 0;
+                for (item of this.cart.items) {
+                    if (item.checked) {
+                        total += (item.price * item.count);
+                    }
+                }
+                return total;
+            }
+        }
+    });
+</script>
+</body>
+</html>
