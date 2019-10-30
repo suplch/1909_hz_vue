@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        .box1 {
+            border: solid 5px red;
+            width: 300px;
+            height: 300px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+
+    <a @click.prevent="go($event)" href="http://www.baidu.com">百度</a>
+
+    <div @click.capture="clkBox1Capture($event)" @click="clkBox1($event)" class="box1">
+
+        <button @click.stop="clkBtn($event)">click</button>
+
+        <button @click.capture="clkBtnCapture($event)" @click="clkBtn($event)">click222</button>
+    </div>
+    <hr/>
+    <div @click.once="clkBox2" class="box1">
+        Box 2
+        <button>按钮</button>
+    </div>
+
+</div>
+
+<script>
+
+
+    let vue = new Vue({
+        el: '#app',
+        methods: {
+            clkBox2(event) {
+                console.log('box2 click');
+                console.log(event.target)
+            },
+            clkBox1(event) {
+                event.preventDefault();
+                console.log('box被点了')
+            },
+            clkBox1Capture(event) {
+                console.log('box 被点击了  捕获阶段')
+            },
+            go(event) {
+                alert('baidu');
+
+
+            },
+            clkBtn(event) {
+                console.log('按钮被点了');
+                //event.stopPropagation();
+            },
+            clkBtnCapture(event) {
+                console.log('按钮222被点了');
+                //event.stopPropagation();
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    {{welcome}}
+    <hr/>
+    <input v-model="welcome" type="text"/>
+    <input v-on:input="changeWelcome" v-bind:value="welcome">
+    <hr/>
+
+    <input v-model="selected" type="checkbox" >
+    <input v-on:change="changeSel"  v-bind:checked="selected" type="checkbox" >
+    {{selected}}
+
+    <textarea v-model="welcome"></textarea>
+    <hr/>
+    <select v-model="friut">
+        <option value="苹果"></option>
+        <option value="香蕉">🍌</option>
+        <option value="栗子">🌰</option>
+    </select>
+    {{ friut }}
+    <hr/>
+
+    <select v-model="myHobby">
+        <option v-bind:value="hobby"  v-for="hobby of hobbies">{{hobby.text}}</option>
+    </select> {{myHobby}}
+    <hr/>
+    性别:
+    <label><input  v-model="sex" name="sex" type="radio" value="男"> 男</label>
+    <label><input  v-model="sex" name="sex" type="radio" value="女"> 女</label>
+    <label><input  v-model="sex" name="sex" type="radio" value="未知"> 未知</label>
+    <hr/>
+    {{sex}}
+
+    <hr/>
+
+    <label v-for="lesson of favoriteLesson">
+        {{lesson.name}}
+        <input v-model="bestFavorite" type="radio" v-bind:value="lesson">
+    </label>
+    <hr/>
+    {{bestFavorite}}
+    <hr/>
+
+    <label v-for="lesson of favoriteLesson">
+        {{lesson.name}}
+        <input v-model="bestFavoriteList" type="checkbox" v-bind:value="lesson">
+    </label>
+    <hr/>
+    {{bestFavoriteList}}
+    <hr/>
+
+    <select v-model="bestFavoriteList222" multiple>
+        <option v-bind:value="lesson" v-for="lesson of favoriteLesson">{{lesson.name}}</option>
+    </select>
+    <hr/>
+    {{ bestFavoriteList222 }}
+</div>
+
+<script>
+    let vue = new Vue({
+        el: '#app',
+        data: {
+            welcome: '欢迎',
+            selected: true,
+            radioSel: true,
+            friut: '香蕉',
+            sex: '女',
+            hobbies: [
+                {text: '打游戏', level: '高'},
+                {text: '学习', level: '低'},
+                {text: '旅游', level: '中'},
+            ],
+
+            favoriteLesson: [
+                {name: 'CSS', level: '5'},
+                {name: 'Node', level: '4'},
+                {name: 'Vue', level: '5'},
+                {name: 'React', level: '2'},
+            ],
+            bestFavorite: undefined,
+            bestFavoriteList: [],
+            bestFavoriteList222: [],
+            myHobby: undefined,
+        },
+        methods: {
+            changeWelcome(event) {
+                this.welcome = event.target.value;
+            },
+            changeSel(event) {
+                this.selected = event.target.checked;
+            }
+        }
+    });
+</script>
+</body>
+</html>
