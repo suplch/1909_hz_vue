@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        .box1 {
+            border: solid 5px red;
+            width: 100px;
+            height: 50px;
+        }
+
+        .color {
+            background: yellow;
+        }
+
+        .box2{
+            border: solid 5px green;
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    123
+    {{ 123 }}
+    {{ 123 + 456 }}
+    {{ name }} {{ name.length }}
+    {{ welcome }} {{ welcome + name }}
+    {{ welcome.split('') }}
+    {{ name.length === 2 ? '短名': '长' }}<br/>
+    {{ website }}<br/>
+    {{html}}
+    <span v-html="html"></span>
+    <span v-html="html2"></span>
+    <hr/>
+
+    <img v-on:click="moreBig" v-bind:src="logo" v-bind:width="logoWidth" />
+
+    <button @click="changeLogo">切换</button>
+
+    <h3 v-if="showTitle">标题</h3>
+    <h3 v-show="showTitle">标题222</h3>
+
+    <button @click="switchShow">切换</button>
+
+    <table border="1">
+        <tbody>
+            <tr :key="product.id" v-for="(product, index) in products">
+                <td>{{index + 1}}</td>
+                <td>{{product.name}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.count}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table border="1">
+        <tbody>
+        <tr :key="product.id" v-for="(product, index) of products">
+            <td>{{index + 1}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.price}}</td>
+            <td>{{product.count}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+    let vue = new Vue({
+        el: '#app',
+        data: {
+            name: '张三',
+            welcome: '欢迎光临',
+            website: 'http://www.baidu.com',
+            html: '<h1>Hello</h1>',
+            html2: '<h2>aaa<script>alert(1234)<\/script></h2>',
+            logo: 'https://www.baidu.com/img/bd_logo1.png',
+            logoWidth: 200,
+            showTitle: true,
+            products: [
+                {id: '111', name: '电脑', price: 10000, count: 20},
+                {id: '222', name: '鼠标', price: 200, count: 20},
+                {id: '333', name: '键盘', price: 100, count: 20},
+            ],
+        },
+        methods: {
+            changeLogo() {
+                this.logo = 'https://box.bdimg.com/static/fisp_static/common/img/searchbox/logo_news_276_88_1f9876a.png'
+            },
+            moreBig() {
+                this.logoWidth += 10;
+            },
+            switchShow() {
+                this.showTitle = !this.showTitle;
+            }
+        }
+    });
+</script>
+</body>
+</html>

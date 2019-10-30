@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        .box1 {
+            border: solid 5px red;
+            width: 100px;
+            height: 50px;
+        }
+
+        .color {
+            background: yellow;
+        }
+
+        .box2{
+            border: solid 5px green;
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+
+    <table border="1">
+        <tbody>
+        <tr :key="product.id" v-for="(product, index) in products">
+            <td>{{index + 1}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.price}}</td>
+            <td>{{product.count}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <hr/>
+    <table border="1">
+        <tbody>
+        <tr :key="product.id" v-for="(product, index) of products">
+            <td>{{index + 1}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.price}}</td>
+            <td>{{product.count}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+    let vue = new Vue({
+        el: '#app',
+        data: {
+            products: [
+                {id: '111', name: '电脑', price: 10000, count: 20},
+                {id: '222', name: '鼠标', price: 200, count: 20},
+                {id: '333', name: '键盘', price: 100, count: 20},
+            ],
+        },
+        methods: {
+
+        }
+    });
+</script>
+</body>
+</html>

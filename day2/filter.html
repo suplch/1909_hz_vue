@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <input v-model="inputTxt" type="text" />
+    <ul>
+        <li v-for="text of filter_textlist">{{text}}</li>
+    </ul>
+    <hr/>
+
+    <!--<input ref="txt" type="text" />-->
+    <!--<ul>-->
+        <!--<li v-for="text of filter_textlist222">{{text}}</li>-->
+    <!--</ul>-->
+</div>
+
+
+<script>
+    let vue = new Vue({
+        el: '#app',
+        data: {
+            inputTxt: '',
+            textlist: [
+                '吃饭',
+                '吃面包',
+                '吃面条',
+                '喝水',
+                '喝茶',
+                '喝茶叶',
+
+            ]
+        },
+
+        computed: { // 计算属性
+            filter_textlist() {
+                if (!this.inputTxt) {
+                    return [];
+                }
+                return this.textlist.filter((text) => {
+                    return text.startsWith(this.inputTxt)
+                })
+            },
+            // filter_textlist222() {
+            //     console.log(this.$refs.txt.value);
+            //
+            //     if (!this.$refs.txt.value) {
+            //         return [];
+            //     }
+            //     return this.textlist.filter((text) => {
+            //         return text.startsWith(this.$refs.txt.value)
+            //     })
+            // }
+        }
+    });
+    console.log(vue);
+</script>
+</body>
+</html>

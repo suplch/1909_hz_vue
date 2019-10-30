@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        .box {
+            margin: 10px;
+            box-shadow: 1px 1px 5px gray;
+            width: 300px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div>
+        <div v-for="student of students" class="box">
+            {{student.name}} 得分 {{ student.score }}
+            <h1 v-if="student.score < 60">
+                努力加油
+            </h1>
+            <h2 v-else-if="student.score >= 60 && student.score <= 90">
+                继续努力
+            </h2>
+            <h3 v-else>
+                不要骄傲
+            </h3>
+        </div>
+        <hr/>
+
+        <div v-for="student of students" class="box">
+            {{student.name}} 得分 {{ student.score }}
+            <template v-if="student.score < 60">
+                努力加油
+            </template>
+            <template v-else-if="student.score >= 60 && student.score <= 90">
+                继续努力
+            </template>
+            <template v-else>
+                不要骄傲
+            </template>
+        </div>
+    </div>
+    <hr/>
+
+
+    <table border="1">
+        <tbody>
+            <template v-for="(student, index) of students">
+                <tr>
+                    <td>{{student.name}}</td>
+                    <td>{{student.score}}</td>
+                </tr>
+                <tr v-if="student.score > 90">
+                    <td colspan="2">不要骄傲</td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+    <button @click="changeName">修改名字</button>
+
+    <button @click="replaceStudent">替换</button>
+
+    {{ person.name }}
+    <button @click="setPersonName">设置名字</button>
+</div>
+
+<script>
+    let vue = new Vue({
+        el: '#app',
+        data: {
+            person: {
+
+            },
+            students: [
+                {name: 'zhang', score: 30},
+                {name: 'wang', score: 60},
+                {name: 'li', score: 80},
+                {name: 'zhao', score: 100},
+                {name: 'zhao', score: 100},
+            ]
+        },
+        methods: {
+            changeName() {
+                this.students = this.students.filter((student, index) => {
+                    return student.score >= 60
+                }).map((student, index) => {
+                    return {...student, name: student.name.toUpperCase()}
+                });;
+
+            },
+            replaceStudent() {
+                //this.students[1] = {name: '王', score: 80};
+                Vue.set(this.students, 1, {name: '王', score: 80})
+                console.log(this.students)
+            },
+            setPersonName() {
+                //this.person.name = '张'
+                Vue.set(this.person, 'name', '张')
+                console.log(this.person);
+            }
+        }
+    });
+</script>
+</body>
+</html>

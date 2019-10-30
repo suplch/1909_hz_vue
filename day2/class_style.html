@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        .box1 {
+            border: solid 5px red;
+            width: 100px;
+            height: 50px;
+        }
+
+        .color {
+            background: yellow;
+        }
+
+        .box2{
+            border: solid 5px green;
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+
+    <div @click="box1Style.pop()" :class="box1Style">
+        box1
+    </div>
+
+    <div @click="box2Style.box1 = !box2Style.box1" :class="box2Style">
+        box2
+    </div>
+
+
+    <div :style="{border: 'solid 5px green', backgroundColor: 'red'}">
+        box1 style
+    </div>
+
+    <div :style="[{border: 'solid 5px green'}, {backgroundColor: 'red'}]">
+        box2 style
+    </div>
+
+</div>
+
+<script>
+
+    let vue = new Vue({
+        el: '#app',
+        data: {
+            box1Style: ['box1', 'color'],
+            box2Style: {box1: true, color: true}
+        },
+        methods: {
+            changeLogo() {
+                this.logo = 'https://box.bdimg.com/static/fisp_static/common/img/searchbox/logo_news_276_88_1f9876a.png'
+            },
+            moreBig() {
+                this.logoWidth += 10;
+            },
+            switchShow() {
+                this.showTitle = !this.showTitle;
+            }
+        }
+    });
+</script>
+</body>
+</html>
