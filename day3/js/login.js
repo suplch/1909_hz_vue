@@ -1,3 +1,4 @@
+// 声明一个 Login 组件
 Vue.component('Login', {
     props: {  // 声明 组件属性
         color: String,
