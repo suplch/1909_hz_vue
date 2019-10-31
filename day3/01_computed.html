@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    {{ firstName + lastName }},
+    {{ fullName }},{{ fullName }}
+    <hr/>
+    {{ welcome }}
+</div>
+
+<script>
+    let vue = new Vue({
+        el: '#app',
+        data: {
+            firstName: '张',
+            lastName: '三',
+            welcome: '欢迎',
+        },
+        watch: {
+            welcome(newValue, oldValue) {
+                console.log(newValue);
+                console.log(oldValue);
+            },
+            // firstName(newVal) {
+            //     this.fullName = newVal + this.lastName
+            // },
+            // lastName(newVal) {
+            //     this.fullName = this.firstName + newVal;
+            // }
+        },
+        computed: {
+            fullName: {
+                get() {
+                    console.log('正在执行计算属性');
+                    return this.firstName + this.lastName;
+                },
+                set(value) {
+                    this.firstName = value[0];
+                    this.lastName = value.substring(1);
+                }
+            }
+        }
+    });
+
+    setTimeout(function () {
+        vue.firstName = '王'
+    }, 3000)
+</script>
+</body>
+</html>

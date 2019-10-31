@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+
+<script>
+
+    let node = {
+        type: 'div',
+        props: {
+            id: '111',
+            style: '',
+            class: '',
+        },
+        children: [
+            {
+                type: 'button',
+
+            },
+            {
+                type: 'div'
+            },
+            {
+                type: 'ul',
+                children: [
+                    {
+                        type: 'li',
+                        children:[
+                            {
+                                type: 'a',
+                                props: {
+                                    href: 'http;//www.baidu.com'
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        type: 'li'
+                    }
+                ]
+            }
+        ]
+    }
+
+
+</script>
+</body>
+</html>
