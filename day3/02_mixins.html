@@ -23,7 +23,7 @@
 
     let vue = new Vue({
         el: '#app',
-        mixins: [obj1, obj2],
+        mixins: [obj1, obj2], // 将其他对象的 属性 合并到 当前Vue 实例中
         mounted() {
             console.log('mounted')
         }

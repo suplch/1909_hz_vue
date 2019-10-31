@@ -34,12 +34,12 @@
             // }
         },
         computed: {
-            fullName: {
-                get() {
+            fullName: { // 声明 计算属性
+                get() {  // 当访问 fullName 的时候 执行 get 方法
                     console.log('正在执行计算属性');
                     return this.firstName + this.lastName;
                 },
-                set(value) {
+                set(value) { // 当设置 fullName 的时候 调用 set 方法
                     this.firstName = value[0];
                     this.lastName = value.substring(1);
                 }
