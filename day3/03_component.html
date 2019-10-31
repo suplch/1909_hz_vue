@@ -10,8 +10,10 @@
 </head>
 <body>
 <div id="app">
+    <!-- 声明登录组件 当组件内部登录成功 触发 login_success 事件 -->
     <Login v-bind:options="loginOptions"  color="green" v-on:login_success="loginOk"></Login>
 
+    <!-- logined 为true 表示 已经登录了, 才可以显示数据 -->
     <ul v-if="logined">
         <li v-for="mail of mailList">{{mail.title}}</li>
     </ul>
