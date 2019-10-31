@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<script>
+
+    class EventBus {
+        constructor() {
+            this.handlers = {}
+        }
+        // 监听 事件
+        $on(eventName, callback) {
+            let callbackList = this.handlers[eventName];
+            if (!callbackList) {
+                callbackList = this.handlers[eventName] = [];
+            }
+            callbackList.push(callback);
+        }
+        // 撤销事件
+        $off(eventName, callback) {
+            let callbackList = this.handlers[eventName];
+            if (callbackList) {
+                let position = callbackList.indexOf(callback);
+                callbackList.splice(position, 1)
+            }
+        }
+        // 发送事件
+        $emit(eventName, data) {
+            let callbackList = this.handlers[eventName];
+            if (callbackList) {
+                for (let callback of callbackList) {
+                    callback(data);
+                }
+            }
+        }
+    }
+
+
+    let eventBus = new EventBus();
+
+    eventBus.$on('开饭了', function (event) {
+        console.log(event);
+    });
+    eventBus.$on('开饭了', function (event) {
+        console.log(event);
+    });
+
+
+    let fn = function (event) {
+        console.log(event);
+    };
+
+    eventBus.$on('开饭了', fn);
+
+
+
+    eventBus.$on('洗碗', function (count) {
+        console.log('开始洗碗')
+    });
+
+
+    eventBus.$emit('开饭了', '🍚面条')
+
+    eventBus.$off('开饭了', fn);
+
+    eventBus.$emit('开饭了', '🍌')
+
+
+
+    eventBus.$emit('洗碗', 10);
+
+
+
+</script>
+</body>
+</html>

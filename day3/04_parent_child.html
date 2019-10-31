@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <Parent/>
+</div>
+
+<script>
+
+    Vue.component('Parent', {
+        template: `
+            <div style="border: solid 5px green;margin: 10px;">
+                父组件 {{job}}
+                <Child ref="boy" @runover="eat($event)" :age="child.age" :score="child.score" />
+                <button @click="getChildInfo">获取 child 信息</button>
+                <button @click="inc">inc age</button>
+                {{child.age}}
+            </div>
+        `,
+        data() {
+            return {
+                child: {
+                    age: 18,
+                    score: 60
+                },
+                job: ''
+            }
+        },
+        methods: {
+            inc() {
+                this.child.age++;
+            },
+            eat(event) {
+                this.job = '开始做🍚';
+                console.log('eat  ', event);
+            },
+            getChildInfo() {
+
+                console.log(this.$refs.boy)
+            }
+        },
+        mounted() {
+            this.$refs.boy.$on('runover', (event) => {
+                console.log('getChildInfo  ', event);
+            });
+        }
+    });
+
+
+    Vue.component('Child', {
+        //props: ['age', 'score'],
+        props: {
+            age: Number,
+            score: {
+                default: 100
+            }
+        },
+        template: `
+            <div style="border: solid 5px red;margin: 10px;">
+                子组件
+                <button @click="run">跑步</button> 步数: {{step}}
+                年龄 {{age}}, 分数 {{score}}
+                <GrandSon   />
+            </div>
+        `,
+        data() {
+            return {
+                step: 0
+            }
+        },
+        methods: {
+            run() {
+                this.step++;
+                if (this.step === 10) {
+                    this.$emit('runover', {
+                        step: this.step
+                    });
+                }
+            }
+        }
+    });
+
+    Vue.component('GrandSon', {
+        props: {
+            toys: String
+        },
+        template: `
+            <div style="border: solid 5px blue">
+                孙子 grandSon
+            </div>
+        `
+    });
+
+    let data = {
+
+    };
+
+    let vue = new Vue({
+        el: '#app',
+        data: data
+    });
+</script>
+</body>
+</html>
