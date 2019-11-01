@@ -39,9 +39,10 @@
             // 发起支付请求
             axios.post('/pay').then((result) => {
                 this.waitRaying = true;
+                let that = this;
                 setTimeout(function timerPay() {
                     // waitRaying 变量控制 是否继续 等待 支付结果
-                    if (this.waitRaying) {
+                    if (that.waitRaying) {
                         // 等待支付结果
                         axios.get('/payresult').then((result) => {
 
