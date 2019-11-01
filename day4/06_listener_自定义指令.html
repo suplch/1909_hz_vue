@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        html, body {
+            height: 100%
+        }
+    </style>
+</head>
+<body onclick="alert('click body')" style="height: 100%">
+<div id="app">
+    <div v-on:click.once="msg" style="border: solid 5px red">
+        box
+    </div>
+    <!-- 自定义 事件监听 指令 -->
+    <div v-listener:click.stop.prevent.once="msg" style="border: solid 5px green">
+        Box2
+    </div>
+</div>
+
+<script>
+    // 自定义 事件监听 指令
+    Vue.directive('listener', {
+        bind(el, binding, vnode) {
+            console.log(binding);
+            el.addEventListener(binding.arg, function (event) {
+                // 如果用户 传递了 stop 修饰符, 执行停止冒泡操作
+                if (binding.modifiers.stop) {
+                    event.stopPropagation();
+                }
+                // 如果用户 传递 prevent 修饰符 停止默认行为
+                if (binding.modifiers.prevent) {
+                    event.preventDefault();
+                }
+                // 如果用户传递 once 修饰符 事件函数只执行一次
+                if (binding.modifiers.once) {
+                    // 移除当前绑定函数
+                    el.removeEventListener(binding.arg, arguments.callee);
+                }
+                binding.value(event);
+            })
+        },
+        unbind(el, binding, vnode) {
+            el.removeEventListener(binding.arg, binding.value)
+        }
+    });
+
+
+    let vue = new Vue({
+        el: '#app',
+        methods: {
+            msg(event) {
+                alert('hello');
+                console.log(event);
+            }
+        }
+    });
+</script>
+</body>
+</html>

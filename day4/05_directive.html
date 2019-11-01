@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--<div v-msg style="border: solid 5px red">-->
+        <!--msg-->
+    <!--</div>-->
+
+    <!--<div v-box:title.hello.world.bye>-->
+        <!--box-->
+    <!--</div>-->
+    <button @click="show = !show">切换</button>
+    <div v-if="show" v-box:[title].hello.world.bye>
+        box
+
+        <button @click="count++">计数: {{count}}</button>
+        <hr/>
+        <Counter></Counter>
+    </div>
+
+</div>
+
+<script>
+    
+    Vue.directive('msg', function (el) {
+        console.log(el);
+        el.style.height = '100px';
+        el.addEventListener('click', function () {
+            alert('hello world');
+        })
+    });
+
+    Vue.directive('box', {
+        bind(el, binding, vnode) {
+            console.log('指令绑定');
+            console.log(el);
+            el.style.border = 'solid 5px green';
+
+            console.log(binding);
+
+            if (binding.modifiers.hello) {
+
+            }
+
+            if (binding.modifiers.world) {
+
+            }
+
+            console.log(vnode);
+
+        },
+        inserted(el, binding, vnode) {
+            console.log('指令插入中...');
+            console.log(el);
+            console.log(binding);
+        },
+        update(el, binding, vnode) {
+            console.log('更新中...')
+            console.log(binding);
+        },
+        componentUpdated(el, binding, vnode) {
+            console.log('组件更新中...')
+            console.log(binding);
+        },
+        unbind(el, binding, vnode) {
+            console.log('解绑...')
+            console.log(binding);
+        }
+    });
+
+    Vue.component('Counter', {
+        template: `
+            <div style="border: solid 5px red">计数器 {{count}}
+            <button @click="count++">更新</button></div>
+        `,
+        data() {
+            return {
+                count: 0
+            }
+        }
+    });
+    
+    let vue = new Vue({
+        el: '#app',
+        data: {
+            title: '标题',
+            show: false,
+            count: 0
+        }
+    });
+</script>
+</body>
+</html>

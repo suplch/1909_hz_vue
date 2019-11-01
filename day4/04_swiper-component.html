@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="./swiper-lib/swiper.min.css">
+    <script src="./swiper-lib/swiper.min.js"></script>
+
+    <script src="lib/vue.js"></script>
+    <style>
+        html, body {
+            position: relative;
+            height: 100%;
+        }
+        body {
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color:#000;
+            margin: 0;
+            padding: 0;
+        }
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+        }
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+        #app {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <Swiper :slides="goodsList" keyname="id">
+        <template v-for="(goods, index) of goodsList" v-slot:[goods.id]>
+            {{goods.name}}, {{goods.price}}, {{goods.pic}}
+        </template>
+    </Swiper>
+</div>
+
+<script>
+
+    Vue.component('Swiper', {
+        props: ['slides', 'keyname'],
+        template: `
+            <div ref="container" class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div v-for="sld of slides" class="swiper-slide">
+                        <slot :name="sld[keyname]"></slot>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        `,
+        mounted() {
+            let swiper = new Swiper(this.$refs.container, {
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+            })
+        }
+    });
+
+
+
+    let vue = new Vue({
+        el: '#app',
+        data: {
+            goodsList: [
+                {id: '111', name: '橘子', price: 12, pic: '🍊'},
+                {id: '222', name: '西瓜', price: 22, pic: '🍉'},
+                {id: '333', name: '葡萄', price: 30, pic: '🍇'},
+                {id: '444', name: '香蕉', price: 30, pic: '🍌'},
+
+            ],
+            sn: 's2'
+        }
+    });
+</script>
+</body>
+</html>
