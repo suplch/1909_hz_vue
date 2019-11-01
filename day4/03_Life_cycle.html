@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <button @click="show = !show">切换</button>
+    <Login v-if="show"></Login>
+</div>
+
+<script>
+
+    Vue.component("Login", {
+        template: `
+            <div style="border: solid 5px red">
+                登录
+                <button @click="count++">{{count}}</button>
+
+            </div>
+        `,
+        data() {
+            return {
+                count: 0
+            }
+        },
+        beforeCreate() {
+            console.log('组件创建前');
+        },
+        created() {
+            console.log('组件创建完成');
+        },
+        beforeMount() {
+            console.log('挂载前');
+        },
+        mounted() {
+            // 发起支付请求
+            axios.post('/pay').then((result) => {
+                this.waitRaying = true;
+                setTimeout(function timerPay() {
+                    // waitRaying 变量控制 是否继续 等待 支付结果
+                    if (this.waitRaying) {
+                        // 等待支付结果
+                        axios.get('/payresult').then((result) => {
+
+                            if (result.data.ok) {
+                                alert('支付成功');
+                            } else {
+                                // 如果还没有等到结果, 继续 轮询 等待
+                                setTimeout(timerPay, 3000);
+                            }
+                        })
+                    }
+
+                });
+            });
+
+            console.log('挂载后');
+            var that = this;
+            this.tid = setInterval(function ()  {
+                that.count++;
+                console.log('count = ', that.count)
+            }, 1000)
+        },
+        beforeUpdate() {
+            console.log('数据即将变化')
+        },
+        updated() {
+            console.log('已经渲染完成')
+        },
+        beforeDestroy() {  // 在组件销毁的阶段 可以 清除不用的 资源
+            window.clearInterval(this.tid);
+            // 组件销毁是 停止 等待支付结果的 轮询
+            this.waitRaying = false;
+            console.log('即将销毁')
+        },
+        destroyed() {
+            console.log('已经销毁')
+        }
+    });
+
+    let vue = new Vue({
+        el: '#app',
+        data: {
+            show: false
+        }
+    });
+</script>
+</body>
+</html>
