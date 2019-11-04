@@ -71,10 +71,16 @@ app.get('/goods', function (req, res) {
 
 const goodsdb = {
     '111': {
-        id: '111', name: '电脑', price: 10000, pic: '💻', descript: '付首付款大师傅拉风;了东方嘉盛'
+        id: '111', name: '电脑', price: 10000, pic: '💻', descript: '付首付款大师傅拉风;了东方嘉盛',
+        relationGoods: [
+            {id: '222', name: '鼠标', price: 50, pic: '🖱'}
+        ]
     },
     '222': {
-        id: '222', name: '鼠标', price: 50, pic: '🖱', description: 'fsafsafafsafsfsdafas'
+        id: '222', name: '鼠标', price: 50, pic: '🖱', descript: 'fsafsafafsafsfsdafas',
+        relationGoods: [
+            {id: '222', name: '鼠标', price: 50, pic: '🖱'}
+        ]
     },
 };
 
@@ -83,9 +89,19 @@ app.get('/detail', function (req, res) {
 
     setTimeout(function () {
         res.send({
-            detail: goodsdb[goodsId]
+            detail: goodsdb[goodsId],
+
         })
     }, 3000)
+
+
+});
+
+app.get('/valid', function (req, res) {
+
+    res.send({
+        ok: false
+    })
 
 
 });

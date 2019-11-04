@@ -10,6 +10,8 @@
 
     <div style="border: solid 5px red; padding: 50px;">
       <router-view/>
+      <hr/>
+      <router-view name="other"></router-view>
     </div>
 
   </div>
