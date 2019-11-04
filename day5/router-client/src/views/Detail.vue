@@ -54,7 +54,6 @@
                     return;
                 }
 
-
                 this.loading = true;
                 // 发起 ajax 请求 获取 后台数据
                 axios.get('/detail?id=' + id).then((result) => {
@@ -72,17 +71,11 @@
         mounted() {
             this.loadProduct(this.$route.params.id);
         },
-
+        // 当路由进入的时候 执行的钩子函数
         beforeRouteEnter(to, from, next) {
             console.log('进入');
-            next(new Promise(function (resolve) {
-
-                setTimeout(function () {
-                    resolve(true)
-                }, 3000)
-
-
-            }));
+            // 执行next 函数 代表 继续 , 负责表示 阻止
+            next();
         },
 
         beforeRouteUpdate(to, from, next) {
@@ -90,12 +83,13 @@
             this.loadProduct(to.params.id);
             next()
         },
-
+        // 当路由离开的时候 执行的钩子函数
         beforeRouteLeave(to, from, next) {
             console.log('离开');
             console.log(next);
 
             if (window.confirm('真的要离开啊')) {
+                // 执行next 函数 代表 继续 , 负责表示 阻止
                 next();
             }
 

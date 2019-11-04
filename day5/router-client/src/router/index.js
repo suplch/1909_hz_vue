@@ -29,6 +29,7 @@ const routes = [
     path: '/concat',
     name: 'concat',
     component: () => import('../views/Concat.vue'),
+    // 局部守卫定义
     beforeEnter(to, from, next) {
       console.log(to);
       console.log(from);
@@ -40,6 +41,7 @@ const routes = [
 
         axios.get('/valid').then((result) => {
           if (result.data.ok) {
+            // 执行next 函数 代表 继续 , 负责表示 阻止
             next()
           }
         });
@@ -81,11 +83,12 @@ const router = new VueRouter({
   routes
 });
 
-
+// 定义全局 守卫
 router.beforeEach(function (to, from, next) {
   console.log(to);
   console.log(from);
   console.log(next);
+  // 执行next 函数 代表 继续 , 负责表示 阻止
    next();
 });
 
