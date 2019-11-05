@@ -1,8 +1,7 @@
 <template>
     <div>
         电影列表
-
-        <ul>
+        <ul style="margin-bottom: 56px">
             <li v-for="movie of movies">
                 <img v-bind:src="movie.img | imgFilter('/128.180/')" />
                 <div class="content">
@@ -11,26 +10,36 @@
                     {{movie.star}}
                 </div>
             </li>
+            <li v-if="noMovies">
+                <div>没有更多数据了</div>
+            </li>
         </ul>
     </div>
 </template>
 
 <script>
-    import axios from 'axios';
+
     // http://m.maoyan.com/ajax/movieOnInfoList?token=
     export default {
         name: "Movies",
         data() {
             return {
-                movies: []
+
             }
         },
-        mounted() {
-            axios.get('/ajax/movieOnInfoList?token=').then((result) => {
-                console.log(result);
-                this.movies = result.data.movieList;
-            })
+        computed: {
+            movies() {
+                return this.$store.state.movies;
+            },
+            noMovies() {
+                return this.$store.state.noMovies;
+            }
         },
+        async mounted() {
+            await this.$store.dispatch('movieOnInfoList')
+
+        },
+
         filters: {
             imgFilter (value, size) {
                 console.log(value)

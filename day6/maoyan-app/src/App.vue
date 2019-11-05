@@ -1,6 +1,8 @@
 <template>
-  <div id="app">
-    <router-view/>
+  <div ref="app" id="app">
+    <div ref="content">
+      <router-view/>
+    </div>
     <ul>
       <li v-for="item of navs" @click="selNav(item)" :class="{select: selectItem === item}">
         <div>
@@ -16,7 +18,6 @@
 <script>
   export default {
     data() {
-
       const navs = [
         {text: '电影', logo: '/images/movie.svg', routeName: 'movies'},
         {text: '影院', logo: '/images/ciname.svg', routeName: 'ciname'},
@@ -27,6 +28,30 @@
         selectItem: navs[0],
         navs: navs
       }
+    },
+    mounted() {
+
+      let scrollHandler = async (event) => {
+        console.log(event);
+        console.log(this.$refs.app.scrollTop);
+        console.log(this.$refs.app.offsetHeight);
+        console.log(this.$refs.content.offsetHeight);
+
+        let top = this.$refs.app.scrollTop;
+        let appHeight = this.$refs.app.offsetHeight;
+        let contentHeight = this.$refs.content.offsetHeight;
+        // 接近 5 像素 是我们认为 滚动触底
+        if (contentHeight -  (top + appHeight) < 5) {
+          console.log('触底了');
+          this.$refs.app.removeEventListener('scroll', scrollHandler);
+          await this.$store.dispatch('moreComingList');
+          // 确保 事件不会重复发生
+          this.$refs.app.addEventListener('scroll', scrollHandler);
+          console.log('remove scroll')
+        }
+      };
+
+      this.$refs.app.addEventListener('scroll', scrollHandler);
     },
     methods: {
       selNav(item) {
@@ -39,6 +64,9 @@
   }
 </script>
 <style scoped>
+  #app {
+    overflow: auto;
+  }
   ul {
     width: 100%;
     height: 48px;
