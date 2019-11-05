@@ -5,13 +5,13 @@ export default new Vuex.Store({
   state: {
     count: 0,  // 这时一个计数器 全局状态,
 
-    products: [
+    products: [  // 商品列表
       {id: '111', name: '电脑', price: 1000, pic: '💻'},
       {id: '222', name: '鼠标', price: 200, pic: '🖱'},
       {id: '333', name: '键盘', price: 100, pic: '⌨️'},
     ],
 
-    cartItems: [
+    cartItems: [  //购物车
       {id: '111', name: '电脑', price: 1000, pic: '💻', count: 2},
       {id: '222', name: '鼠标', price: 200, pic: '🖱', count: 1},
     ]
