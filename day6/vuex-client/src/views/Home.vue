@@ -23,6 +23,9 @@ export default {
       //await this.$store.dispatch('get_user_info');
       // await this.$store.dispatch('get_salary');
 
+      // await this.$store.dispatch('get_user_info');
+      // console.log('用户数据已经获取' + result);
+
       this.$store.dispatch('get_user_info').then((result) => {
         console.log('用户数据已经获取' + result);
       })
