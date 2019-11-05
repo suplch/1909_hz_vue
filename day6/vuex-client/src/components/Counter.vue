@@ -9,6 +9,7 @@
         name: "Counter",
         computed: {
             count() {
+                // 返回全局 状态属性
                 return this.$store.state.count
             }
         }
