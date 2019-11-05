@@ -32,7 +32,7 @@
         name: "CartPage",
         computed: {
             cartItems() {
-                return this.$store.state.cartItems;
+                return this.$store.state.shop.cartItems;
             }
         },
         methods: {

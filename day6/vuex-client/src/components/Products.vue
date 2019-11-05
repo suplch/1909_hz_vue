@@ -15,12 +15,12 @@
         name: "Products",
         methods: {
             addToCart(product) {
-                this.$store.dispatch('addToCart', product);
+                this.$store.dispatch('shop/addToCart', product);
             }
         },
         computed: {
             products() {
-                return this.$store.state.products;
+                return this.$store.state.shop.products;
             }
         }
     }

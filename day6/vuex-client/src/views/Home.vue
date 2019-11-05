@@ -3,6 +3,9 @@
     <img alt="Vue logo" src="../assets/logo.png">
     <Counter></Counter>
     <Inc></Inc>
+
+    <button @click="getUserInfo">获取用户信息</button>
+    {{ userInfo }}
   </div>
 </template>
 
@@ -14,6 +17,27 @@ export default {
   name: 'home',
   mounted() {
     console.log(this)
+  },
+  methods: {
+    async getUserInfo() {
+      //await this.$store.dispatch('get_user_info');
+      // await this.$store.dispatch('get_salary');
+
+      this.$store.dispatch('get_user_info').then((result) => {
+        console.log('用户数据已经获取' + result);
+      })
+
+    }
+  },
+  computed: {
+    userInfo() {
+      return this.$store.state.username
+              + ', '
+              + this.$store.state.age
+              + ', '
+              + this.$store.state.salary
+
+    }
   },
   components: {
     Counter,

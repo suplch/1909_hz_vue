@@ -17,7 +17,7 @@
         name: "Cart",
         computed: {
             cartItems() {
-                return this.$store.state.cartItems;
+                return this.$store.state.shop.cartItems;
             }
         },
         methods: {
@@ -29,7 +29,4 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>
+<style scoped></style>
