@@ -33,11 +33,11 @@
                 console.log(event);
                 console.log(this.$refs.mlist.scrollTop);
                 console.log(this.$refs.mlist.offsetHeight);
-                console.log(this.$refs.mlistcontent.offsetHeight);
+                console.log(this.$refs.mlist.scrollHeight);
 
                 let top = this.$refs.mlist.scrollTop;
                 let appHeight = this.$refs.mlist.offsetHeight;
-                let contentHeight = this.$refs.mlistcontent.offsetHeight;
+                let contentHeight = this.$refs.mlist.scrollHeight;
 
                 //接近 5 像素 是我们认为 滚动触底
                 if (contentHeight -  (top + appHeight) < 5) {

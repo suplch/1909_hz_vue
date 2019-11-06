@@ -3,6 +3,7 @@ export default {
     namespaced: true,
     state: {
         expectPaging: {},
+
         expectComing: [],
 
         movieIds: [],
@@ -11,6 +12,9 @@ export default {
     mutations: {
         appendExpectedComint(state, coming) {
             state.expectComing = [...state.expectComing, ...coming];
+        },
+        initExpectedComing(state, coming) {
+            state.expectComing = coming;
         },
         setExpectPaging(state, paging) {
             state.expectPaging = paging;
@@ -24,12 +28,22 @@ export default {
     },
     actions: {
         // http://m.maoyan.com/ajax/mostExpected?ci=197&limit=10&offset=0&token=
-        async mostExpected({commit, dispatch}) {
-            let result = await axios.get(`/ajax/mostExpected?ci=197&limit=10&offset=0&token=`)
-            commit('appendExpectedComint', result.data.coming);
+        async mostExpected({commit, dispatch, state}) {
+            let expectComing = state.expectComing;
+            let paging = state.expectPaging;
+            let offset = expectComing.length;
+
+            let result = await axios.get(`/ajax/mostExpected?ci=197&limit=10&offset=${offset}&token=`);
+            if (offset === 0) {
+                commit('initExpectedComing', result.data.coming);
+            } else {
+                commit('appendExpectedComint', result.data.coming);
+            }
+
             commit('setExpectPaging', result.data.paging);
             console.log('expect', result.data)
         },
+
         // http://m.maoyan.com/ajax/comingList?ci=197&token=&limit=10
         async comingList({commit, dispatch}) {
             let result = await axios.get(`/ajax/comingList?ci=197&token=&limit=10`);
