@@ -19,6 +19,7 @@
 <script>
 
     // http://m.maoyan.com/ajax/movieOnInfoList?token=
+    import eventBus from '../eventbus';
     export default {
         name: "Online",
         data() {
@@ -34,9 +35,18 @@
                 return this.$store.state.noMovies;
             }
         },
-        async mounted() {
+        async mounted() { // hd    handler
+            this.reachBottomHd = async () => {
+                await this.$store.dispatch('moreComingList');
+            };
+            eventBus.$on('reachBottom', this.reachBottomHd);
+
             await this.$store.dispatch('movieOnInfoList')
 
+        },
+
+        destroyed() {
+            eventBus.$off('reachBottom', this.reachBottomHd);
         },
 
         filters: {

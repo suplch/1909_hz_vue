@@ -15,6 +15,7 @@
 
 <script>
     // http://m.maoyan.com/ajax/movieOnInfoList?token=
+    import eventBus from '../eventbus';
     export default {
         name: "Movies",
         data() {
@@ -42,7 +43,8 @@
                 if (contentHeight -  (top + appHeight) < 5) {
                     console.log('触底了');
                     this.$refs.mlist.removeEventListener('scroll', scrollHandler);
-                    await this.$store.dispatch('moreComingList');
+                    eventBus.$emit('reachBottom');
+                    //await this.$store.dispatch('moreComingList');
                     // 确保 事件不会重复发生
                     this.$refs.mlist.addEventListener('scroll', scrollHandler);
                     console.log('remove scroll')

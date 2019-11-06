@@ -26,7 +26,6 @@
         {text: '影院', logo: '/images/ciname.svg', path: '/ciname'},
         {text: '我的', logo: '/images/ciname.svg', path: '/movies'},
       ];
-
       return {
         selectItem: navs[0],
         navs,
