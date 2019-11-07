@@ -31,7 +31,6 @@
     export default {
         name: "FilterMovie",
         data() {
-
             let d1 = new Date();
             let d2 = new Date(d1.getTime() + DAY);
             let d3 = new Date(d2.getTime() + DAY);
@@ -47,6 +46,9 @@
                     {text: `周${mapDate[d5.getDay()]} ${d5.getMonth() + 1}月${d5.getDate()}日`},
                 ]
             }
+        },
+        mounted() {
+
         }
     }
 </script>
