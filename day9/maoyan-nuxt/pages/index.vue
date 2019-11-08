@@ -1,6 +1,9 @@
 <template>
   <div>
-    Hello
+    Hello {{ count }} <button @click="inc">增加</button>
+    <hr/>
+
+    <hr/>
     <nuxt-link to="/news">新电影</nuxt-link>
     <ul>
       <li :key="todo.id" v-for="todo of todos">
@@ -29,6 +32,16 @@ export default {
       ]
     }
   },
+  computed: {
+    count() {
+      return this.$store.state.count
+    }
+  },
+  methods: {
+    inc() {
+      this.$store.dispatch('inc')
+    }
+  },
   // 异步数据访问, 返回的数据对象最终会被合并到 组件的数据模型中
   async asyncData() {
 
@@ -39,7 +52,6 @@ export default {
     }
 
     let result = await axios.get(path);
-    console.log(result.data);
     return result.data;
   },
   mounted() {

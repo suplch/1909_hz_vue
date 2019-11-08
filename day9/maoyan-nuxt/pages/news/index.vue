@@ -7,6 +7,13 @@
         <nuxt-link :to="'/news/' + movie.id" >{{movie.name}}</nuxt-link>
       </li>
     </ul>
+
+    <ul>
+      <li v-for="m of movieList">
+        {{m.nm}}, {{m.star}}
+      </li>
+    </ul>
+
   </div>
 </template>
 
@@ -20,6 +27,11 @@
           {id: '222', name: '少年的你'},
           {id: '333', name: '少年的你222'},
         ]
+      }
+    },
+    computed: {
+      movieList() {
+        return this.$store.state.maoyanData.movieList
       }
     }
   }
