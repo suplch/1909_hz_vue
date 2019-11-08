@@ -10,7 +10,6 @@
             </ul>
             <!-- 这里可以放一些其它的 DOM，但不会影响滚动 -->
         </div>
-
     </div>
 </template>
 
@@ -42,57 +41,46 @@
         },
         mounted() {
 
-            const scroll = new BScroll(this.$refs.wrapper, {
-                //snap: true,
-                pullDownRefresh: {
-                    threshold: 50,
-                    stop: 200
-                },
-                scrollbar: {
-                    fade: true,
-                    interactive: false,
-                },
-                pullUpLoad: {
-                    threshold: 50
-                }
-            });
-
-            scroll.on('pullingDown', () => {
-                console.log('下拉刷新');
-
-                this.refreshing = true;
-                setTimeout(() => {
-                    this.refreshing = false;
-                    this.items = [{text: '新闻1'}, {text: '新闻2'}, ...this.items];
-                }, 5000)
-
-                scroll.finishPullDown();  // 结束下拉刷新
-            });
-
-            scroll.on('pullingUp', () => {
-                console.log('正在加载...')
-
-                this.loadMore = true;
-                setTimeout(() => {
-                    this.loadMore = false;
-                    this.items = [...this.items, {text: '更多数据aaa'}, {text: '更多数据bbb'}]
-                    scroll.finishPullUp(); // 结束 上拉加载
-                }, 2000)
-            })
-
-
             this.$nextTick(() => {
+                const scroll = new BScroll(this.$refs.wrapper, {
+                    //snap: true,
+                    // pullDownRefresh: {
+                    //     threshold: 50,
+                    //     stop: 200
+                    // },
+                    // scrollbar: {
+                    //     fade: true,
+                    //     interactive: false,
+                    // },
+                    // pullUpLoad: {
+                    //     threshold: 50
+                    // }
+                });
 
+                scroll.on('pullingDown', () => {
+                    console.log('下拉刷新');
+
+                    this.refreshing = true;
+                    setTimeout(() => {
+                        this.refreshing = false;
+                        this.items = [{text: '新闻1'}, {text: '新闻2'}, ...this.items];
+                    }, 5000)
+
+                    scroll.finishPullDown();  // 结束下拉刷新
+                });
+
+                scroll.on('pullingUp', () => {
+                    console.log('正在加载...')
+
+                    this.loadMore = true;
+                    setTimeout(() => {
+                        this.loadMore = false;
+                        this.items = [...this.items, {text: '更多数据aaa'}, {text: '更多数据bbb'}]
+                        scroll.finishPullUp(); // 结束 上拉加载
+                    }, 2000)
+                });
 
             });
-
-            setTimeout(() => {
-
-            }, 1000)
-
-
-
-
         }
     }
 </script>
@@ -112,7 +100,7 @@
 
     ul li {
         height: 100px;
-        margin: 20px;
+        margin: 0px 20px 20px 20px;
         border: solid 1px red;
     }
 

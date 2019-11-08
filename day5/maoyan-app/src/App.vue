@@ -5,6 +5,8 @@
       <li v-for="item of navs" @click="selNav(item)" :class="{select: selectItem === item}">
         <div>
           <img :src="item.logo"/><br/>
+        </div>
+        <div>
           <span>{{item.text}}</span>
         </div>
       </li>
